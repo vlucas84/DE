@@ -7,24 +7,28 @@ def is_number(s):
     except ValueError:
         return False
 
-number1 = input("Enter the first number:\n")
-number2 = input("Enter the second number:\n")
+n1_str = input("Enter the first number:\n")
+n2_str = input("Enter the second number:\n")
 operator = input("Select an operator (+, -, *, /):\n")
 
-if not is_number(number1):
-    print(f"You entered '{number1}' as the 1st value. This is not a number.")
-elif not is_number(number2):
-    print(f"You entered '{number2}' as the 2nd value. This is not a number.")
+if not is_number(n1_str):
+    print(f"You entered '{n1_str}' as the 1st value. This is not a number.")
+elif not is_number(n2_str):
+    print(f"You entered '{n2_str}' as the 2nd value. This is not a number.")
 elif operator not in set_correct_operators:
-    print(f"You entered '{operator}' as the operator. This is an invalid value. YOu should enter one of the following values: (+, -, *, /).")
+    ops_str = ", ".join(sorted(set_correct_operators))
+    print(f"You entered '{operator}' as the operator. This is an invalid value. You should enter one of the following values: ({ops_str}).")
 else:
-    if operator == "+":
-        print(f"Result: {float(number1)} + {float(number2)} = {float(number1) + float(number2)}")
-    elif operator == "-":
-        print(f"Result: {float(number1)} - {float(number2)} = {float(number1) - float(number2)}")
-    elif operator == "*":
-        print(f"Result: {float(number1)} * {float(number2)} = {float(number1) * float(number2)}")
-    elif float(number2) == 0:
-        print(f"You entered '{number2}' as the 2nd value. Division cannot be performed.")
+    n1, n2 = float(n1_str), float(n2_str) 
+    if operator == '/' and n2 == 0:
+        print(f"You entered '{n2_str}' as the 2nd value. Division cannot be performed.")
     else:
-        print(f"Result: {float(number1)} / {float(number2)} = {float(number1) / float(number2)}")
+        if operator == "+":
+            result = n1 + n2
+        elif operator == "-":
+            result = n1 - n2
+        elif operator == "*":
+            result = n1 * n2
+        else:
+            result = n1 / n2         
+        print(f"Result: {n1} {operator} {n2} = {result}")
