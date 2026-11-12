@@ -2,8 +2,6 @@
 
 An ETL pipeline that extracts data from JSON files (students and rooms), loads it into a PostgreSQL database, performs analytical SQL queries, and exports the results in JSON or XML format.
 
----
-
 ## Tech Stack
 
 * **Python 3.12+**
@@ -12,8 +10,6 @@ An ETL pipeline that extracts data from JSON files (students and rooms), loads i
 * **Docker & Docker Compose**
 * **uv** (Dependency manager)
 
----
-
 ## Features
 
 * **Relational database schema** with a many-to-one relationship.
@@ -21,28 +17,43 @@ An ETL pipeline that extracts data from JSON files (students and rooms), loads i
 * **Database-level processing:** All mathematical operations (aggregations, sorting) are handled at the database level.
 * **Query optimization** using composite indexes.
 * **OOP design** following SOLID principles.
-* **CLI interface** supporting `--students`, `--rooms`, `--format`, and other configuration flags.
+* **CLI interface** supporting `--students`, `--rooms`, `--format`, and dynamic query flags.
 
----
+## Architecture & Project Structure
 
-## Project Structure
+The project is designed adhering to **SOLID** principles and **Dependency Injection** (dependencies are initialized in `main.py` and passed to the `CommandLineInterface` orchestrator).
 
-* **`loaders.py`**: Abstract `BaseLoader` and `JsonLoader` streaming implementation.
-* **`exporters.py`**: Abstract `BaseExporter`, `JsonExporter`/`XmlExporter`, and a factory function.
-* **`db.py`**: Database connection management, schema initialization, and batch inserts.
-* **`analytics.py`**: `AnalyticsService` executes SQL queries managed via the registry.
-* **`cli.py`**: `CommandLineInterface` orchestrates the pipeline and parses arguments.
-* **`sql/`**: Contains `schema.sql`, `queries.json` registry, and individual `.sql` files for queries.
-
----
+```text
+python_practice/
+├── docker-compose.yml              # PostgreSQL container configuration
+├── pyproject.toml                  # Package dependencies and metadata
+├── docs/                           # CLI execution screenshots and logs
+└── src/python_practice/
+    ├── main.py                     # Entry point (Composition Root & Dependency Injection)
+    ├── cli.py                      # CLI argument parsing and pipeline orchestration
+    ├── config.py                   # Configuration loading and connection string (DSN) assembly
+    ├── db.py                       # Connection management, schema initialization, and batch inserts
+    ├── loaders.py                  # Streaming data loaders (BaseLoader / JsonLoader)
+    ├── analytics.py                # SQL report execution engine managed via registry
+    ├── exporters.py                # Data exporters (JSON / XML) and exporter factory
+    └── sql/
+        ├── schema.sql              # DDL schema for tables and composite indexes
+        ├── queries.json            # Analytical reports registry (q1–q4)
+        ├── query001.sql            # Number of students in each room
+        ├── query002.sql            # Top 5 rooms with lowest average student age
+        ├── query003.sql            # Top 5 rooms with largest age difference
+        └── query004.sql            # Rooms with students of different sexes
+```
 
 ## Installation & Setup
 
 ### 1. Prepare Data
+
 Ensure `students.json` and `rooms.json` are in the project root. If they are missing, place them next to `pyproject.toml`.
 
 ### 2. Environment Variables
-Create a `.env` file in the project root (or copy from `.env.example`) with the following content:
+
+Create a `.env` file in the project root with the following content:
 
 ```env
 DB_HOST=localhost
@@ -53,6 +64,7 @@ DB_PASSWORD=postgrespassword
 ```
 
 ### 3. Start the Database
+
 Run the following command to start the PostgreSQL container:
 
 ```bash
@@ -60,6 +72,7 @@ docker compose up -d
 ```
 
 ### 4. Install Dependencies
+
 Run the following command to install the required packages:
 
 ```bash
@@ -67,22 +80,25 @@ uv sync
 ```
 
 ### 5. Run the Pipeline
-Run the main ETL script:
+
+Execute the main ETL script as a module:
 
 ```bash
 python -m python_practice.main --students students.json --rooms rooms.json --format json
 ```
 
----
+*(Alternatively, if your environment is activated, you can also use `python-practice --students students.json --rooms rooms.json --format json`)*
 
 ## Usage Examples
 
 ### Screenshots
 
 #### CLI Help Output
+
 ![CLI Help Output](docs/help_output.png)
 
 #### Successful Pipeline Execution
+
 ![Successful Pipeline Execution](docs/pipeline_success.png)
 
 ### Available CLI Parameters
@@ -97,8 +113,6 @@ python -m python_practice.main --students students.json --rooms rooms.json --for
 | `--batch-size` | — | No | `1000` | Batch size for database inserts |
 | `--verbose` | `-v` | No | `False` | Enable debug-level logging |
 
----
-
 ## Analytical Queries
 
 All calculations are performed on the PostgreSQL side. Queries are stored in `src/python_practice/sql/` and managed via `queries.json`.
@@ -107,8 +121,6 @@ All calculations are performed on the PostgreSQL side. Queries are stored in `sr
 * **`q2`**: Top 5 rooms with the lowest average student age.
 * **`q3`**: Top 5 rooms with the largest age difference among students (`max - min`).
 * **`q4`**: List of rooms where students of different sexes live together.
-
----
 
 ## Optimization (Indexes)
 
