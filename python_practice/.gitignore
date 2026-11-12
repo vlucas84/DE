@@ -8,8 +8,8 @@
 __pycache__/
 *.py[cod]
 
-# Lockfile with resolved dependency versions
-uv.lock
+# Pytest
+.pytest_cache/
 
 # Source raw datasets for database seeding and testing
 rooms.json

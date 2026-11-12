@@ -28,6 +28,7 @@ python_practice/
 ├── docker-compose.yml              # PostgreSQL container configuration
 ├── pyproject.toml                  # Package dependencies and metadata
 ├── docs/                           # CLI execution screenshots and logs
+├── tests/                          # Unit test suite (pytest)
 └── src/python_practice/
     ├── main.py                     # Entry point (Composition Root & Dependency Injection)
     ├── cli.py                      # CLI argument parsing and pipeline orchestration
@@ -112,6 +113,14 @@ python -m python_practice.main --students students.json --rooms rooms.json --for
 | `--output-dir` | `-o` | No | `output/` | Output directory for saved reports |
 | `--batch-size` | — | No | `1000` | Batch size for database inserts |
 | `--verbose` | `-v` | No | `False` | Enable debug-level logging |
+
+## Running Tests
+
+Run the unit test suite using `pytest`:
+
+```bash
+uv run python -m pytest -v
+```
 
 ## Analytical Queries
 
