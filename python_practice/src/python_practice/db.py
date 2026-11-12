@@ -40,6 +40,7 @@ class DatabaseManager:
             password=self.password,
             host=self.host,
             port=self.port,
+            connect_timeout=3,
         )
         try:
             yield conn
