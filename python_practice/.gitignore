@@ -1,0 +1,19 @@
+# Python virtual environment (dependencies and binary files)
+.venv/
+
+# Environment variables and sensitive database credentials
+.env
+
+# Byte-compiled files
+__pycache__/
+*.py[cod]
+
+# Pytest
+.pytest_cache/
+
+# Source raw datasets for database seeding and testing
+rooms.json
+students.json
+
+# Output files with analytics
+output/
