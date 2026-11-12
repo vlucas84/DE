@@ -1,7 +1,7 @@
 [project]
 name = "python-practice"
 version = "0.1.0"
-description = "Add your description here"
+description = "ETL pipeline for loading student data into PostgreSQL and generating analytics reports"
 readme = "README.md"
 authors = [
     { name = "vlucas84", email = "vladimir.lukyanenko84@gmail.com" }
@@ -13,7 +13,7 @@ dependencies = [
 ]
 
 [project.scripts]
-python-practice = "python_practice:main"
+python-practice = "python_practice.main:main"
 
 [build-system]
 requires = ["uv_build>=0.13.1,<0.14.0"]
