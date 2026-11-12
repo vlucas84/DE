@@ -24,6 +24,8 @@ class AnalyticsService:
         file_path = self.sql_dir / filename
         if not file_path.is_file():
             raise FileNotFoundError(f"SQL file not found: {file_path}")
+        sql = file_path.read_text(encoding="utf-8").strip()
+        logger.debug("Loaded SQL from %s:\n%s", file_path.name, sql)
         return file_path.read_text(encoding="utf-8").strip()
 
     def _load_registry(self) -> list[dict[str, str]]:

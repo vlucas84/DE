@@ -34,6 +34,14 @@ class DatabaseManager:
 
         Automatically commits on success or rolls back on exception.
         """
+        logger.debug(
+            "Connecting to PostgreSQL at %s:%s (db=%s, user=%s)",
+            self.host,
+            self.port,
+            self.dbname,
+            self.user,
+        )
+
         conn = psycopg.connect(
             dbname=self.dbname,
             user=self.user,

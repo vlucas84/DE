@@ -89,6 +89,7 @@ class CommandLineInterface:
         """Execute complete data pipeline: ingestion, DB persistence, and analytics export."""
         if self.args.verbose:
             logging.getLogger().setLevel(logging.DEBUG)
+            logger.debug("CLI arguments parsed: %s", vars(self.args))
 
         loader = JsonLoader()
         exporter = get_exporter(self.args.format)
