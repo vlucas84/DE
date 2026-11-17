@@ -88,7 +88,7 @@ class XmlExporter(BaseExporter):
         return path
 
 
-# Реестр доступных форматов экспорта
+# List of available export formats
 _EXPORTER_REGISTRY: dict[str, type[BaseExporter]] = {
     "json": JsonExporter,
     "xml": XmlExporter,
