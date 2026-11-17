@@ -26,7 +26,7 @@ class DatabaseManager:
         self.password = config.db_password
 
         self.host = config.db_host
-        self.port = int(config.db_port) # Приводим к int, так как os.getenv возвращает str
+        self.port = int(config.db_port) # Cast to int since os.getenv returns str
 
     @contextmanager
     def get_connection(self) -> Generator[psycopg.Connection, None, None]:

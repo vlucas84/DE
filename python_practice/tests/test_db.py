@@ -16,13 +16,13 @@ def test_get_connection_commit_and_rollback(monkeypatch):
 
     mock_conn = MagicMock()
     with patch("python_practice.db.psycopg.connect", return_value=mock_conn):
-        # 1. Успешный сценарий -> commit
+        # 1. Success path -> commit
         with db.get_connection():
             pass
         mock_conn.commit.assert_called_once()
         mock_conn.close.assert_called_once()
 
-        # 2. Сценарий с ошибкой -> rollback
+        # 2. Exception path -> rollback
         mock_conn.reset_mock()
         with pytest.raises(RuntimeError):
             with db.get_connection():
@@ -55,11 +55,11 @@ def test_insert_rooms_batch(monkeypatch):
     mock_cursor = mock_conn.cursor.return_value.__enter__.return_value
 
     with patch("python_practice.db.psycopg.connect", return_value=mock_conn) as mock_connect:
-        # Пустой список не должен открывать соединение
+        # Empty batch should not open a DB connection
         db.insert_rooms_batch([])
         mock_connect.assert_not_called()
 
-        # Непустой список вызывает executemany
+        # Non-empty batch executes batch insert
         rooms = [{"id": 1, "name": "Room 1"}]
         db.insert_rooms_batch(rooms)
         mock_cursor.executemany.assert_called_once()

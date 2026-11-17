@@ -32,13 +32,13 @@ def test_run_query_by_command_success_and_unknown(tmp_path):
 
     service = AnalyticsService(db_manager=mock_db, sql_dir=tmp_path)
 
-    # 1. Успешный запуск существующей команды
+    # 1. Valid command executes query and returns results
     key, rows = service.run_query_by_command("q1")
     assert key == "q1_rooms_count"
     assert rows == [{"room": 1, "count": 3}]
     mock_db.execute_query.assert_called_once_with("SELECT * FROM rooms;")
 
-    # 2. Ошибка при неизвестной команде
+    # 2. Unknown command raises ValueError
     with pytest.raises(ValueError, match="Unknown query command"):
         service.run_query_by_command("q99")
 
