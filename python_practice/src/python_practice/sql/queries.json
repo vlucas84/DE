@@ -1,0 +1,26 @@
+[
+  {
+    "command": "q1",
+    "id": "rooms_student_counts",
+    "file": "query001.sql",
+    "description": "List of rooms and count of students living in each"
+  },
+  {
+    "command": "q2",
+    "id": "lowest_avg_age",
+    "file": "query002.sql",
+    "description": "Top 5 rooms with the lowest average student age"
+  },
+  {
+    "command": "q3",
+    "id": "largest_age_diff",
+    "file": "query003.sql",
+    "description": "Top 5 rooms with the largest age difference among students"
+  },
+  {
+    "command": "q4",
+    "id": "mixed_sex_rooms",
+    "file": "query004.sql",
+    "description": "List of rooms where students of different sexes live together"
+  }
+]

@@ -1,0 +1,28 @@
+services:
+  db:
+    # Use the lightweight official PostgreSQL 16 Alpine image
+    image: postgres:16-alpine
+
+    # Custom name for the running container
+    container_name: postgres_db
+
+    # Automatically restart the container if it crashes or if Docker restarts
+    restart: always
+
+    # Environment variables read from the local .env file
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
+
+    # Map the port from the host machine to the container (Host:Container)
+    ports:
+      - "${DB_PORT}:5432"
+
+    # Persist database data on the host machine using a named volume
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+# Named volume configuration to prevent data loss when containers are stopped/removed
+volumes:
+  postgres_data:
